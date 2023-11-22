@@ -1,4 +1,5 @@
 # build system
+/.env
 /.venv
 /cdk.out
 amz_stream_infra/__pycache__/
@@ -9,3 +10,4 @@ tests/unit/__pycache__/
 # jetbrains
 /.idea
 /*.iml
+/.vscode

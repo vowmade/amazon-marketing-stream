@@ -12,8 +12,14 @@
 # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-from ad_api.base import ApiResponse, Client, Marketplaces, sp_endpoint, fill_query_params
+import os
+from ad_api.base import (
+    ApiResponse,
+    Client,
+    Marketplaces,
+    sp_endpoint,
+    fill_query_params,
+)
 from amz_stream_cli import __version__
 from enum import Enum
 
@@ -41,34 +47,106 @@ class DataSet(str, Enum):
     budget_usage = "budget-usage"
     sd_traffic = "sd-traffic"
     sd_conversion = "sd-conversion"
+    adsp_campaigns = "adsp-campaigns"
+    adsp_campaign_flights = "adsp-campaign-flights"
+    adsp_adgroups = "adsp-adgroups"
+    adsp_adgroup_targets = "adsp-adgroup-targets"
+    adsp_traffic = "adsp-traffic"
+    adsp_conversion = "adsp-conversion"
+    adsp_clickstream = "adsp-clickstream"
+    adsp_richmedia = "adsp-richmedia"
 
 
 class SubscriptionUpdateEntityStatus(str, Enum):
     archived = "ARCHIVED"
 
 
-class Stream(Client):
-    @sp_endpoint('/streams/subscriptions', method='POST')
+class SPStream(Client):
+    @sp_endpoint("/streams/subscriptions", method="POST")
     def create_subscription(self, **kwargs) -> ApiResponse:
-        return self._request(kwargs.pop('path'), data=kwargs.pop('body'), params=kwargs,
-                             headers=self._add_additional_cli_headers())
+        return self._request(
+            kwargs.pop("path"),
+            data=kwargs.pop("body"),
+            params=kwargs,
+            headers=self._add_additional_cli_headers(),
+        )
 
-    @sp_endpoint('/streams/subscriptions/{}', method='PUT')
+    @sp_endpoint("/streams/subscriptions/{}", method="PUT")
     def update_subscription(self, subscription_id, **kwargs) -> ApiResponse:
-        return self._request(fill_query_params(kwargs.pop('path'), subscription_id),
-                             data=kwargs.pop('body'), params=kwargs, headers=self._add_additional_cli_headers())
+        return self._request(
+            fill_query_params(kwargs.pop("path"), subscription_id),
+            data=kwargs.pop("body"),
+            params=kwargs,
+            headers=self._add_additional_cli_headers(),
+        )
 
-    @sp_endpoint('/streams/subscriptions/{}', method='GET')
+    @sp_endpoint("/streams/subscriptions/{}", method="GET")
     def get_subscription(self, subscription_id, **kwargs) -> ApiResponse:
-        return self._request(fill_query_params(kwargs.pop('path'), subscription_id), params=kwargs,
-                             headers=self._add_additional_cli_headers())
+        return self._request(
+            fill_query_params(kwargs.pop("path"), subscription_id),
+            params=kwargs,
+            headers=self._add_additional_cli_headers(),
+        )
 
-    @sp_endpoint('/streams/subscriptions', method='GET')
+    @sp_endpoint("/streams/subscriptions", method="GET")
     def list_subscriptions(self, **kwargs) -> ApiResponse:
-        return self._request(kwargs.pop('path'), params=kwargs, headers=self._add_additional_cli_headers())
+        return self._request(
+            kwargs.pop("path"),
+            params=kwargs,
+            headers=self._add_additional_cli_headers(),
+        )
 
     @staticmethod
     def _add_additional_cli_headers():
-        additional_headers = {'x-amzn-stream-cli-version': __version__}
+        additional_headers = {"x-amzn-stream-cli-version": __version__}
         return additional_headers
 
+
+class DSPStream(Client):
+    @sp_endpoint("/dsp/streams/subscriptions", method="POST")
+    def create_subscription(self, **kwargs) -> ApiResponse:
+        return self._request(
+            kwargs.pop("path"),
+            data=kwargs.pop("body"),
+            params=kwargs,
+            headers=self._add_additional_cli_headers(),
+        )
+
+    @sp_endpoint("/dsp/streams/subscriptions/{}", method="PUT")
+    def update_subscription(self, subscription_id, **kwargs) -> ApiResponse:
+        return self._request(
+            fill_query_params(kwargs.pop("path"), subscription_id),
+            data=kwargs.pop("body"),
+            params=kwargs,
+            headers=self._add_additional_cli_headers(),
+        )
+
+    @sp_endpoint("/dsp/streams/subscriptions/{}", method="GET")
+    def get_subscription(self, subscription_id, **kwargs) -> ApiResponse:
+        return self._request(
+            fill_query_params(kwargs.pop("path"), subscription_id),
+            params=kwargs,
+            headers=self._add_additional_cli_headers(),
+        )
+
+    @sp_endpoint("/dsp/streams/subscriptions", method="GET")
+    def list_subscriptions(self, **kwargs) -> ApiResponse:
+        return self._request(
+            kwargs.pop("path"),
+            params=kwargs,
+            headers=self._add_additional_cli_headers(),
+        )
+
+    @staticmethod
+    def _add_additional_cli_headers():
+        additional_headers = {
+            "x-amzn-stream-cli-version": __version__,
+            "Amazon-Ads-Account-ID": os.environ.get("AD_API_ADVERTISER_ID"),
+        }
+        return additional_headers
+
+
+def get_stream_class(data_set_id: None | str) -> Client:
+    if data_set_id and data_set_id.startswith("adsp"):
+        return DSPStream
+    return SPStream

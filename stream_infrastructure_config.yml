@@ -20,6 +20,30 @@ datasets:
     - dataSetId: sd-conversion
       snsSourceArn: arn:aws:sns:us-east-1:877712924581:*
 
+    - dataSetId: adsp-traffic
+      snsSourceArn: arn:aws:sns:us-east-1:192826442293:*
+
+    - dataSetId: adsp-conversion
+      snsSourceArn: arn:aws:sns:us-east-1:561176707666:*
+
+    - dataSetId: adsp-clickstream
+      snsSourceArn: arn:aws:sns:us-east-1:740036912861:*
+    
+    - dataSetId: adsp-richmedia 
+      snsSourceArn: arn:aws:sns:us-east-1:718926279583:*
+    
+    - dataSetId: adsp-campaigns
+      snsSourceArn: arn:aws:sns:us-east-1:153247821255:*
+    
+    - dataSetId: adsp-campaign-flights
+      snsSourceArn: arn:aws:sns:us-east-1:700228448367:*
+    
+    - dataSetId: adsp-adgroups
+      snsSourceArn: arn:aws:sns:us-east-1:222778752755:*
+    
+    - dataSetId: adsp-adgroup-targets
+      snsSourceArn: arn:aws:sns:us-east-1:419834811630:*
+
   EU:
     - dataSetId: sp-traffic
       snsSourceArn: arn:aws:sns:eu-west-1:668473351658:*
@@ -30,6 +54,30 @@ datasets:
     - dataSetId: budget-usage
       snsSourceArn: arn:aws:sns:eu-west-1:675750596317:*
 
+    - dataSetId: adsp-traffic
+      snsSourceArn: arn:aws:sns:eu-west-1:738976022360:*
+
+    - dataSetId: adsp-conversion
+      snsSourceArn: arn:aws:sns:eu-west-1:238549931437:*
+
+    - dataSetId: adsp-clickstream
+      snsSourceArn: arn:aws:sns:eu-west-1:475804811800:*
+    
+    - dataSetId: adsp-richmedia 
+      snsSourceArn: arn:aws:sns:eu-west-1:047120534722:*
+    
+    - dataSetId: adsp-campaigns
+      snsSourceArn: arn:aws:sns:eu-west-1:599052634802:*
+    
+    - dataSetId: adsp-campaign-flights
+      snsSourceArn: arn:aws:sns:eu-west-1:633559263003:*
+    
+    - dataSetId: adsp-adgroups
+      snsSourceArn: arn:aws:sns:eu-west-1:682324742468:*
+    
+    - dataSetId: adsp-adgroup-targets
+      snsSourceArn: arn:aws:sns:eu-west-1:764057072099:*
+
   FE:
     - dataSetId: sp-traffic
       snsSourceArn: arn:aws:sns:us-west-2:074266271188:*
@@ -39,6 +87,30 @@ datasets:
 
     - dataSetId: budget-usage
       snsSourceArn: arn:aws:sns:us-west-2:100899330244:*
+
+    - dataSetId: adsp-traffic
+      snsSourceArn: arn:aws:sns:us-west-2:115810253223:*
+
+    - dataSetId: adsp-conversion
+      snsSourceArn: arn:aws:sns:us-west-2:063613587323:*
+
+    - dataSetId: adsp-clickstream
+      snsSourceArn: arn:aws:sns:us-west-2:201394813667:*
+    
+    - dataSetId: adsp-richmedia 
+      snsSourceArn: arn:aws:sns:us-west-2:886046350753:*
+    
+    - dataSetId: adsp-campaigns
+      snsSourceArn: arn:aws:sns:us-west-2:216875695489:*
+    
+    - dataSetId: adsp-campaign-flights
+      snsSourceArn: arn:aws:sns:us-west-2:451213518288:*
+    
+    - dataSetId: adsp-adgroups
+      snsSourceArn: arn:aws:sns:us-west-2:360850786875:*
+    
+    - dataSetId: adsp-adgroup-targets
+      snsSourceArn: arn:aws:sns:us-west-2:178122609971:*
 
 # This config defines the AWS region where Stream consumer stack will be installed in your AWS account.
 # The selected regions ensure minimal latency in message consumption.

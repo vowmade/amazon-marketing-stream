@@ -31,12 +31,36 @@ This package includes following templates for all available datasets for adverti
 * AmzStream-NA-budget-usage
 * AmzStream-NA-sd-traffic
 * AmzStream-NA-sd-conversion
+* AmzStream-NA-adsp-traffic
+* AmzStream-NA-adsp-conversion
+* AmzStream-NA-adsp-clickstream
+* AmzStream-NA-adsp-richmedia 
+* AmzStream-NA-adsp-campaigns
+* AmzStream-NA-adsp-campaign-flights
+* AmzStream-NA-adsp-adgroups
+* AmzStream-NA-adsp-adgroup-targets
 * AmzStream-EU-sp-traffic
 * AmzStream-EU-sp-conversion
 * AmzStream-EU-budget-usage
+* AmzStream-EU-adsp-traffic
+* AmzStream-EU-adsp-conversion
+* AmzStream-EU-adsp-clickstream
+* AmzStream-EU-adsp-richmedia 
+* AmzStream-EU-adsp-campaigns
+* AmzStream-EU-adsp-campaign-flights
+* AmzStream-EU-adsp-adgroups
+* AmzStream-EU-adsp-adgroup-targets
 * AmzStream-FE-sp-traffic
 * AmzStream-FE-sp-conversion
 * AmzStream-FE-budget-usage
+* AmzStream-FE-adsp-traffic
+* AmzStream-FE-adsp-conversion
+* AmzStream-FE-adsp-clickstream
+* AmzStream-FE-adsp-richmedia 
+* AmzStream-FE-adsp-campaigns
+* AmzStream-FE-adsp-campaign-flights
+* AmzStream-FE-adsp-adgroups
+* AmzStream-FE-adsp-adgroup-targets
   
 ## Development prerequisites
 
@@ -87,8 +111,12 @@ We recommend exploring the contents of this project and familiarizing yourself w
     ```
 
 4. Deploy CloudFormation templates.
-   
-   Depending on your requirements, you can choose to deploy all CloudFormation templates or individual templates.
+    Ensure your enviornment is setup and ready to deploy
+    ```
+    $ cdk bootstrap  
+    ```
+
+    Depending on your requirements, you can choose to deploy all CloudFormation templates or individual templates.
    
     ```
     $ cdk deploy --all
@@ -135,7 +163,19 @@ We provide a Stream subscription management command line tool that supports foll
 * Update - Updates an Amazon Marketing Stream subscription by ID.
 
 In order to use the CLI, you must create a credentials.yml file with your Amazon Ads API credentials. If you don't have credentials for the Ads API, review the [Onboarding process](https://advertising.amazon.com/API/docs/en-us/onboarding/overview).
+
+### Env var credentials
   
+Set environment variables or locally `.env` file.
+  
+```
+AD_API_CLIENT_ID=
+AD_API_CLIENT_SECRET=
+AD_API_REFRESH_TOKEN=
+AD_API_PROFILE_ID=
+AD_API_ADVERTISET_ID=  #for dsp only
+``` 
+
 ### Search path for credentials.yml
 
 * macOS and Other Unix: `~/.config/python-ad-api`

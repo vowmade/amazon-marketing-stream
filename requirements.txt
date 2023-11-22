@@ -7,3 +7,4 @@ pyyaml
 python-amazon-ad-api>=0.3.7
 requests
 typer[all]
+python-dotenv>=1.0.0
