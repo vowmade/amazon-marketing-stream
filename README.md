@@ -111,7 +111,7 @@ We recommend exploring the contents of this project and familiarizing yourself w
     ```
 
 4. Deploy CloudFormation templates.
-    Ensure your enviornment is setup and ready to deploy
+    Ensure your environment is setup and ready to deploy
     ```
     $ cdk bootstrap  
     ```
@@ -173,7 +173,7 @@ AD_API_CLIENT_ID=
 AD_API_CLIENT_SECRET=
 AD_API_REFRESH_TOKEN=
 AD_API_PROFILE_ID=
-AD_API_ADVERTISET_ID=  #for dsp only
+AD_API_ADVERTISER_ID=  #for dsp only
 ``` 
 
 ### Search path for credentials.yml

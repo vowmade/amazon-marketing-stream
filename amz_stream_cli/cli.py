@@ -42,7 +42,8 @@ def _version_callback(value: bool) -> None:
 def _subscription_to_table(subscription: dict) -> Optional[Table]:
     table = Table("Field", "Value")
     for field, value in subscription.items():
-        table.add_row(field, value)
+        if isinstance(value, str):
+            table.add_row(field, value)
     return table
 
 
@@ -97,6 +98,72 @@ def create_subscription(
 ) -> None:
     create_subscription_dict = {
         "destinationArn": destination_arn,
+        "clientRequestToken": client_request_token,
+        "dataSetId": data_set_id.value,
+    }
+    if notes is not None:
+        create_subscription_dict["notes"] = notes
+
+    Stream = get_stream_class(data_set_id)
+    response = Stream(
+        marketplace=AdvertisingApiRegion.get_marketplace(api_region)
+    ).create_subscription(body=json.dumps(create_subscription_dict))
+    _check_for_error_message_from_api(response.payload)
+    table = _subscription_to_table(response.payload)
+    console.print("Subscription has been created!")
+    console.print(table)
+
+
+@app.command(
+    name="create_firehose",
+    short_help="Creates Amazon Marketing Stream subscription.",
+    help="""
+             Example usage:\n
+             python -m amz_stream_cli create 
+             --destination-arn  arn:aws:sqs:us-east-1:xxxxxxxxxxxx:AmzStream-NA-sp-traffic-IngressQueuexxxxx 
+             -client-request-token my-unique-idempotency-string-token 
+             --data-set-id sp-traffic 
+             --notes "This is a marketing stream subscription"
+             """,
+)
+def create_firehose_subscription(
+    api_region: AdvertisingApiRegion = typer.Option(
+        AdvertisingApiRegion.NA,
+        "--api-region",
+        "-a",
+        help="Advertising API region to use. Default is NA.",
+    ),
+    stream_arn: str = typer.Option(
+        ...,
+        "--stream-arn",
+        "-s",
+        help="AWS ARN of the destination endpoint associated with the subscription. Supported destination types: Firehose",
+    ),
+    client_request_token: str = typer.Option(
+        ...,
+        "--client-request-token",
+        "-c",
+        help="Unique value supplied by the caller used to track identical API requests. Should request be re-tried, "
+        "the caller should supply the same value.",
+    ),
+    notes: str = typer.Option(
+        None,
+        "--notes",
+        "-n",
+        help="Additional details associated with the subscription.",
+    ),
+    data_set_id: DataSet = typer.Option(
+        ..., "--data-set-id", "-d", help="DataSet ID to use for the subscription."
+    ),
+) -> None:
+    create_subscription_dict = {
+        "destination": {
+            "firehoseDestination": {
+                "deliveryStreamArn": stream_arn,
+                "subscriptionRoleArn": "arn:aws:iam::994612831889:role/NA-adsp-traffic-FirehoseSubscriptionRole",
+                "subscriberRoleArn": "arn:aws:iam::994612831889:role/NA-adsp-traffic-FirehoseSubscriberRole",
+            }
+        },
         "clientRequestToken": client_request_token,
         "dataSetId": data_set_id.value,
     }
