@@ -229,7 +229,13 @@ Example:
 
 For help on individual commands, use the following:
 
+* `python -m amz_stream_cli create_firehose --help`
 * `python -m amz_stream_cli create --help`
 * `python -m amz_stream_cli get --help`
 * `python -m amz_stream_cli list --help`
 * `python -m amz_stream_cli update --help`
+
+Example: 
+```
+% AD_API_ADVERTISER_ID=xxxxxx python -m amz_stream_cli create_firehose -d adsp-conversion -a EU -s arn:aws:firehose:eu-west-1:xxxx:deliverystream/AmzStream-EU-adsp-conversion-StorageFirehose -c 5e6520ef-64be-4c63-92e7-65317eef36d4
+```

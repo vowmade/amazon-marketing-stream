@@ -13,19 +13,21 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import json
+from typing import Optional
+
+import typer
+from dotenv import load_dotenv
+from rich.console import Console
+from rich.table import Table
+
 from amz_stream_cli import __app_name__, __version__
 from amz_stream_cli.stream_api import (
     AdvertisingApiRegion,
     DataSet,
-    get_stream_class,
     SubscriptionUpdateEntityStatus,
+    get_stream_class,
 )
-from dotenv import load_dotenv
-from rich.console import Console
-from rich.table import Table
-from typing import Optional
-import json
-import typer
 
 load_dotenv(override=False)
 
@@ -160,8 +162,8 @@ def create_firehose_subscription(
         "destination": {
             "firehoseDestination": {
                 "deliveryStreamArn": stream_arn,
-                "subscriptionRoleArn": "arn:aws:iam::994612831889:role/NA-adsp-traffic-FirehoseSubscriptionRole",
-                "subscriberRoleArn": "arn:aws:iam::994612831889:role/NA-adsp-traffic-FirehoseSubscriberRole",
+                "subscriptionRoleArn": "arn:aws:iam::138219872167:role/adsp-con-EU-subscription",
+                "subscriberRoleArn": "arn:aws:iam::138219872167:role/adsp-con-EU-subscriber",
             }
         },
         "clientRequestToken": client_request_token,
